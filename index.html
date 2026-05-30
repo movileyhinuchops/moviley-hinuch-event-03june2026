@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <link rel="icon" href="assets/logo-mark.png" type="image/png">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="ערב פתוח עם העשייה, הרעיונות והאנשים שמאחורי תנועת מובילי חינוך — יום שלישי 3 ביוני 2026, 19:00. ההשתתפות ללא תשלום." />
   <title>מובילי חינוך — ערב היכרות</title>
   <meta property="og:title" content="ערב היכרות עם תנועת מובילי חינוך" />
   <meta property="og:description" content="ערב פתוח עם העשייה, הרעיונות והאנשים שמאחורי התנועה — יום שלישי 3 ביוני 2026, 19:00" />
@@ -340,8 +341,6 @@ p { font-family: var(--font-sans); font-size: var(--fs-body); line-height: var(-
   <script type="text/babel">
 const { useState } = React;
 
-// אחרי Deploy של Apps Script — הדבק כאן את ה-Web App URL
-const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw3lLVINq1jiK7wuhUH_193JImUNgPXeWL2oT6YmdV0XrvWfEkza1Ay72fBMIQgyOserQ/exec";
 
 const EVENT = {
   title: "ערב היכרות עם תנועת מובילי חינוך",
@@ -365,26 +364,6 @@ const gcalUrl =
   "&details=" + encodeURIComponent(calDetails) +
   "&location=" + encodeURIComponent(EVENT.locName + ", " + EVENT.locAddr);
 
-function downloadICS() {
-  const ics = [
-    "BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Movili Hinuch//Event//HE",
-    "CALSCALE:GREGORIAN","BEGIN:VEVENT",
-    "UID:movili-hinuch-2026-06-03@movileyhinuch.org.il",
-    "DTSTAMP:20260529T000000Z",
-    "DTSTART;TZID=Asia/Jerusalem:" + EVENT.start,
-    "DTEND;TZID=Asia/Jerusalem:"   + EVENT.end,
-    "SUMMARY:" + EVENT.title,
-    "DESCRIPTION:" + calDetails,
-    "LOCATION:" + EVENT.locName + ", " + EVENT.locAddr,
-    "END:VEVENT","END:VCALENDAR",
-  ].join("\r\n");
-  const blob = new Blob([ics], { type: "text/calendar;charset=utf-8" });
-  const a = document.createElement("a");
-  a.href = URL.createObjectURL(blob);
-  a.download = "ערב-היכרות-מובילי-חינוך.ics";
-  document.body.appendChild(a); a.click(); a.remove();
-}
-
 const I = {
   cal:   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>,
   clock: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>,
@@ -394,9 +373,6 @@ const I = {
   arrow: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>,
 };
 
-function scrollToForm() {
-  const el = document.getElementById("register");
-  if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 10, behavior: "smooth" });
 }
 
 function Header() {
