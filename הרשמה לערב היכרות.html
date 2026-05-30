@@ -520,11 +520,9 @@ function RegisterForm() {
     setLoading(true);
     setError("");
     try {
-      await fetch(APPS_SCRIPT_URL, {
-        method: "POST",
-        mode: "no-cors",
-        body: JSON.stringify(v),
-      });
+      const fd = new FormData();
+      Object.entries(v).forEach(([k, val]) => fd.append(k, val));
+      await fetch(APPS_SCRIPT_URL, { method: "POST", mode: "no-cors", body: fd });
       setSent(true);
     } catch (err) {
       setError("אירעה שגיאה בשמירת הפרטים. נסו שוב.");
@@ -643,5 +641,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(<App />);
   </script>
 </body>
 </html>
+
 
 
