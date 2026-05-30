@@ -509,34 +509,13 @@ function Pillars() {
 }
 
 function RegisterForm() {
-  const [sent, setSent] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [v, setV] = useState({ name: "", phone: "", email: "", count: "1", consent: false });
-  const set = (k) => (e) => setV({ ...v, [k]: e.target.type === "checkbox" ? e.target.checked : e.target.value });
-
-  const submit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setError("");
-    try {
-      const fd = new URLSearchParams();
-      Object.entries(v).forEach(([k, val]) => fd.append(k, val));
-      await fetch(APPS_SCRIPT_URL, { method: "POST", mode: "no-cors", body: fd });
-      setSent(true);
-    } catch (err) {
-      setError("אירעה שגיאה בשמירת הפרטים. נסו שוב.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
+  const WA_URL = "https://movileyhinuch.s.gy/whatsapp-group-invite";
   return (
     <section className="register" id="register">
       <div className="container register-grid">
         <div className="register-copy">
           <h2>נשמח מאוד<br/>להכיר אתכם</h2>
-          <p>מלאו את הפרטים ושמרו את מקומכם בערב. נשלח אליכם תזכורת ופרטים אחרונים לפני המפגש.</p>
+          <p>ההצטרפות לערב דרך קבוצת WhatsApp — שם תקבלו את כל הפרטים והתזכורת לפני המפגש.</p>
           <div className="register-mini">
             <div className="row">
               <span className="ic">{I.cal}</span>
@@ -549,56 +528,16 @@ function RegisterForm() {
           </div>
         </div>
 
-        <div className="form-card">
-          {sent ? (
-            <div className="form-success">
-              <div className="ok">{I.check}</div>
-              <h3>נרשמתם בהצלחה!</h3>
-              <p>שמרנו את מקומכם בערב ההיכרות. נתראה ב‑3 ביוני. אפשר כבר עכשיו להוסיף את המועד ליומן.</p>
-              <div className="cal-again">
-                <a className="btn btn-primary" href={gcalUrl} target="_blank" rel="noopener">{I.cal}הוספה ל‑Google Calendar</a>
-                <button className="btn btn-ghost" onClick={downloadICS}>{I.arrow}הורדת קובץ ליומן</button>
-              </div>
-            </div>
-          ) : (
-            <form onSubmit={submit}>
-              <p className="fc-title">הרשמה לערב</p>
-              <p className="fc-sub">ההשתתפות ללא תשלום · המקומות מוגבלים</p>
-              <div className="field">
-                <label>שם מלא <span className="req">*</span></label>
-                <input required placeholder="ישראלה ישראלי" value={v.name} onChange={set("name")} />
-              </div>
-              <div className="form-row">
-                <div className="field">
-                  <label>טלפון <span className="req">*</span></label>
-                  <input required type="tel" placeholder="050-0000000" value={v.phone} onChange={set("phone")} />
-                </div>
-                <div className="field">
-                  <label>מספר משתתפים <span className="req">*</span></label>
-                  <select required value={v.count} onChange={set("count")}>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5 ומעלה</option>
-                  </select>
-                </div>
-              </div>
-              <div className="field">
-                <label>אימייל <span className="req">*</span></label>
-                <input required type="email" placeholder="name@email.com" value={v.email} onChange={set("email")} />
-              </div>
-              <div className="consent">
-                <input id="consent" type="checkbox" checked={v.consent} onChange={set("consent")} />
-                <label htmlFor="consent">אני מאשר/ת קבלת עדכונים ופרטים על הערב ועל פעילות התנועה.</label>
-              </div>
-              {error && <p style={{color:"var(--danger)",fontSize:"14px",margin:"0 0 12px"}}>{error}</p>}
-              <button className="btn btn-primary btn-lg submit" type="submit" disabled={loading}>
-                {loading ? "שולח..." : <>{I.check}אישור הרשמה</>}
-              </button>
-              <p className="form-note">הפרטים נשמרים לצורך הערב בלבד ולא יועברו לגורם שלישי.</p>
-            </form>
-          )}
+        <div className="form-card" style={{display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",gap:"24px",textAlign:"center"}}>
+          <div style={{fontSize:"64px",lineHeight:1}}>💬</div>
+          <h3 style={{margin:0,fontSize:"22px",color:"var(--brand-navy)"}}>ההצטרפות דרך WhatsApp</h3>
+          <p style={{margin:0,color:"var(--fg-2)",fontSize:"15px",maxWidth:"280px"}}>לחצו להצטרפות לקבוצה — נתראה ב‑3 ביוני!</p>
+          <a className="btn btn-primary btn-lg" href={WA_URL} target="_blank" rel="noopener"
+             style={{background:"#25D366",borderColor:"#25D366",gap:"10px",textDecoration:"none"}}>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.136.565 4.14 1.547 5.878L0 24l6.304-1.519A11.94 11.94 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.006-1.37l-.36-.214-3.733.899.934-3.62-.234-.373A9.818 9.818 0 012.182 12C2.182 6.58 6.58 2.182 12 2.182S21.818 6.58 21.818 12 17.42 21.818 12 21.818z"/></svg>
+            הצטרפות לקבוצה
+          </a>
+          <p style={{margin:0,fontSize:"13px",color:"var(--fg-3)"}}>ההשתתפות ללא תשלום · המקומות מוגבלים</p>
         </div>
       </div>
     </section>
@@ -641,6 +580,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(<App />);
   </script>
 </body>
 </html>
+
 
 
 
