@@ -399,7 +399,7 @@ function Header() {
         <a href="#top"><img className="hdr-logo" src="assets/logo-with-tagline.png" alt="מובילי חינוך" /></a>
         <div className="hdr-right">
           <span className="hdr-date">{I.cal}<span>3 ביוני 2026 · 19:00</span></span>
-          <button className="btn btn-primary" onClick={scrollToForm}>להרשמה לערב</button>
+          <a className="btn btn-primary" href="https://movileyhinuch.s.gy/whatsapp-group-invite" target="_blank" rel="noopener">הצטרפות לקבוצה</a>
         </div>
       </div>
     </header>
@@ -442,7 +442,7 @@ function Hero() {
             התנועה — ולשיחה על הדרכים לקחת חלק ולהשפיע.
           </p>
           <div className="hero-actions">
-            <button className="btn btn-primary btn-lg" onClick={scrollToForm}>{I.arrow}להרשמה לערב</button>
+            <a className="btn btn-primary btn-lg" href="https://movileyhinuch.s.gy/whatsapp-group-invite" target="_blank" rel="noopener" style={{background:"#25D366",borderColor:"#25D366",textDecoration:"none"}}>{I.arrow}הצטרפות לקבוצת WhatsApp</a>
             <a className="btn btn-ghost btn-lg" href={gcalUrl} target="_blank" rel="noopener">{I.cal}הוסיפו ליומן</a>
           </div>
         </div>
@@ -538,6 +538,7 @@ function RegisterForm() {
             הצטרפות לקבוצה
           </a>
           <p style={{margin:0,fontSize:"13px",color:"var(--fg-3)"}}>ההשתתפות ללא תשלום · המקומות מוגבלים</p>
+          <p style={{margin:0,fontSize:"13px",color:"var(--fg-3)",marginTop:"8px"}}>כל העדכונים והפרטים לגבי הערב יועברו בקבוצה בלבד</p>
         </div>
       </div>
     </section>
@@ -580,6 +581,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(<App />);
   </script>
 </body>
 </html>
+
 
 
 
