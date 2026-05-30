@@ -270,6 +270,21 @@ p { font-family: var(--font-sans); font-size: var(--fs-body); line-height: var(-
 .form-success .cal-again { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
 
 /* footer */
+/* Accessibility Modal */
+.modal-overlay { position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px; }
+.modal-box { background:#fff;border-radius:var(--r-xl);padding:36px 32px;max-width:520px;width:100%;max-height:90vh;overflow-y:auto;position:relative;outline:none; }
+.modal-box h2 { font-size:22px;font-weight:800;color:var(--brand-navy);margin:0 0 16px; }
+.modal-box h3 { font-size:16px;font-weight:700;color:var(--fg-1);margin:20px 0 8px; }
+.modal-box p,.modal-box li { font-size:15px;color:var(--fg-2);line-height:1.65; }
+.modal-box ul { padding-right:20px;margin:0; }
+.modal-box a { color:var(--accent); }
+.modal-close { position:absolute;top:16px;left:16px;background:none;border:none;font-size:18px;cursor:pointer;color:var(--fg-3);padding:4px 8px;border-radius:4px; }
+.modal-close:hover { background:var(--gray-100); }
+.modal-close:focus-visible { outline:2px solid var(--accent);outline-offset:2px; }
+.a11y-link { background:none;border:none;color:var(--fg-3);font-size:13px;cursor:pointer;padding:0;text-decoration:underline;font-family:var(--font-sans); }
+.a11y-link:hover { color:var(--fg-2); }
+.a11y-link:focus-visible { outline:2px solid var(--accent);outline-offset:2px;border-radius:2px; }
+
 .footer { background: #fff; border-top: 1px solid var(--border-1); padding: 44px 0; }
 .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
 .footer-logo { height: 56px; width: auto; }
@@ -535,22 +550,68 @@ function RegisterForm() {
   );
 }
 
-function Footer() {
+function AccessibilityModal({ onClose }) {
+  const ref = React.useRef();
+  React.useEffect(() => {
+    ref.current?.focus();
+    const handler = (e) => { if (e.key === "Escape") onClose(); };
+    document.addEventListener("keydown", handler);
+    return () => document.removeEventListener("keydown", handler);
+  }, []);
   return (
-    <footer className="footer">
-      <div className="container footer-inner">
-        <img className="footer-logo" src="assets/logo-with-tagline.png" alt="מובילי חינוך" />
-        <div className="socials">
-          <a href="https://movileyhinuch.s.gy/facebook-030626-footer" target="_blank" rel="noopener" aria-label="Facebook">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 8.5h2.5V5.5H14c-2 0-3.5 1.5-3.5 3.5v2H8v3h2.5V21h3v-7H16l.5-3H13.5V9.2c0-.4.3-.7.5-.7z"/></svg>
-          </a>
-          <a href="https://movileyhinuch.s.gy/instagram-030626-footer" target="_blank" rel="noopener" aria-label="Instagram">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-          </a>
-        </div>
-        <div className="copyright">© כל הזכויות שמורות למובילי חינוך 2026</div>
+    <div className="modal-overlay" onClick={onClose} role="presentation">
+      <div
+        className="modal-box"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="a11y-title"
+        ref={ref}
+        tabIndex={-1}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button className="modal-close" onClick={onClose} aria-label="סגירה">✕</button>
+        <h2 id="a11y-title">הצהרת נגישות</h2>
+        <p>תנועת מובילי חינוך שואפת להנגיש את תכניה הדיגיטליים לכלל הציבור, לרבות אנשים עם מוגבלויות, בהתאם לתקן הישראלי 5568 ורמת WCAG 2.1 AA.</p>
+        <h3>מה הונגש</h3>
+        <ul>
+          <li>טקסט חלופי לתמונות</li>
+          <li>מבנה כותרות היררכי</li>
+          <li>תמיכה בניווט מקלדת</li>
+          <li>הגדרת שפה וכיוון קריאה (עברית, RTL)</li>
+          <li>תיאורים לקישורים ולכפתורים</li>
+        </ul>
+        <h3>פניות בנושא נגישות</h3>
+        <p>נתקלתם בבעיית נגישות? נשמח לשמוע ולתקן.</p>
+        <p>מייל: <a href="mailto:moviley.hinuch@gmail.com">moviley.hinuch@gmail.com</a></p>
+        <p style={{fontSize:"13px",color:"var(--fg-3)",marginTop:"16px"}}>הצהרה עודכנה: מאי 2026</p>
       </div>
-    </footer>
+    </div>
+  );
+}
+
+function Footer() {
+  const [showA11y, setShowA11y] = useState(false);
+  const triggerRef = React.useRef();
+  const handleClose = () => { setShowA11y(false); triggerRef.current?.focus(); };
+  return (
+    <>
+      {showA11y && <AccessibilityModal onClose={handleClose} />}
+      <footer className="footer">
+        <div className="container footer-inner">
+          <img className="footer-logo" src="assets/logo-with-tagline.png" alt="מובילי חינוך" />
+          <div className="socials">
+            <a href="https://movileyhinuch.s.gy/facebook-030626-footer" target="_blank" rel="noopener" aria-label="Facebook">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 8.5h2.5V5.5H14c-2 0-3.5 1.5-3.5 3.5v2H8v3h2.5V21h3v-7H16l.5-3H13.5V9.2c0-.4.3-.7.5-.7z"/></svg>
+            </a>
+            <a href="https://movileyhinuch.s.gy/instagram-030626-footer" target="_blank" rel="noopener" aria-label="Instagram">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            </a>
+          </div>
+          <div className="copyright">© כל הזכויות שמורות למובילי חינוך 2026</div>
+          <button ref={triggerRef} className="a11y-link" onClick={() => setShowA11y(true)}>הצהרת נגישות</button>
+        </div>
+      </footer>
+    </>
   );
 }
 
