@@ -443,14 +443,9 @@ function Hero() {
       <div className="container hero-grid">
         <div className="hero-copy">
           <span className="eyebrow">ערב היכרות פתוח · הציבור מוזמן</span>
-          <h1>ערב היכרות עם תנועת <span className="accent">מובילי חינוך</span></h1>
+          <h1>אתה רואה מה לא עובד בחינוך. אנחנו מחפשים אנשים שרוצים <span className="accent">לעשות עם זה משהו.</span></h1>
           <p className="hero-lead">
-            החינוך הציבורי בישראל זקוק היום לקול אזרחי, ערכי ואחראי. תנועת מובילי חינוך
-            פועלת בשטח כדי לקדם שינוי מדיניות ולחזק את מערכת החינוך הציבורית בישראל.
-          </p>
-          <p className="hero-lead">
-            אנחנו מזמינות ומזמינים אתכם לערב פתוח עם העשייה, הרעיונות והאנשים שמאחורי
-            התנועה — ולשיחה על הדרכים לקחת חלק ולהשפיע.
+            ערב היכרות עם קבוצה של הורים, מורים ואנשי חינוך שמתחילים לבנות משהו אחר — ומחפשים עוד אנשים לדרך.
           </p>
           <div className="hero-actions">
             <a className="btn btn-primary btn-lg" href="https://movileyhinuch.s.gy/whatsapp-group-invite" target="_blank" rel="noopener" style={{background:"#25D366",borderColor:"#25D366",textDecoration:"none",color:"#111111"}}>{I.arrow}הצטרפות לקבוצת WhatsApp</a>
@@ -493,18 +488,30 @@ function Details() {
   );
 }
 
+function WhySection() {
+  return (
+    <section style={{padding:"64px 0", background:"var(--white)", borderBottom:"1px solid var(--border-1)"}}>
+      <div className="container" style={{maxWidth:"720px"}}>
+        <h2 style={{fontSize:"28px",fontWeight:800,marginBottom:"18px",color:"var(--fg-1)"}}>יש לך דעה על חינוך. מה אם היה לה מקום?</h2>
+        <p style={{fontSize:"18px",lineHeight:1.7,color:"var(--fg-2)",margin:0}}>הרבה אנשים חושבים על החינוך — ועוצרים שם. מובילי חינוך היא קבוצה שמחליטה לא לעצור. בערב הזה נכיר אחד את השני, נשתף מה מניע כל אחד מאיתנו, ונבנה ביחד את הצעדים הראשונים.</p>
+      </div>
+    </section>
+  );
+}
+
 function Pillars() {
   const items = [
-    { img: "assets/icon-brain-book.png",      h: "חינוך 2.0",            p: "מעדכנים גרסה למערכת — שיטות הוראה ותכנים שמתאימים למאה ה‑21." },
-    { img: "assets/icon-kids-highfive.png",   h: "ילד הוא ילד הוא ילד", p: "חינוך איכותי ושוויוני לכל ילד וילדה בישראל, בכל מקום." },
-    { img: "assets/icon-lightbulb-book.png",  h: "כותבים סיפור משותף",  p: "מוציאים את הפוליטיקה המגזרית מהחינוך ובונים סיפור ישראלי משותף." },
+    { img: "assets/icon-brain-book.png",      h: "מה אנחנו בונים",      p: "החזון של מובילי חינוך — לאן אנחנו הולכים ולמה עכשיו." },
+    { img: "assets/icon-kids-highfive.png",   h: "מי כבר כאן",          p: "תכיר את האנשים שכבר הצטרפו — הורים, מורים, אנשי חינוך — ומה הביא כל אחד מהם." },
+    { img: "assets/icon-lightbulb-book.png",  h: "מה תפקידך בסיפור",   p: "נדבר בגלוי על מה התנועה צריכה, מה זה דורש ואיך נראית מעורבות אמיתית." },
   ];
   return (
     <section className="pillars">
       <div className="container">
         <div className="pillars-head">
-          <span className="eyebrow">על מה נדבר בערב</span>
-          <h2>הרעיונות שמובילים אותנו</h2>
+          <span className="eyebrow">מה מחכה לך</span>
+          <h2>שעה וחצי של שיחה אמיתית</h2>
+          <p style={{fontSize:"17px",color:"var(--fg-2)",marginTop:"12px",marginBottom:0,lineHeight:1.65}}>לא הרצאה. לא מצגת. אנשים שיושבים סביב שולחן ומחליטים שהם רוצים להיות חלק מהפתרון.</p>
         </div>
         <div className="pillars-grid">
           {items.map((it) => (
@@ -526,8 +533,8 @@ function RegisterForm() {
     <section className="register" id="register">
       <div className="container register-grid">
         <div className="register-copy">
-          <h2>נשמח מאוד<br/>להכיר אתכם</h2>
-          <p>ההצטרפות לערב דרך קבוצת WhatsApp — שם תקבלו את כל הפרטים והתזכורת לפני המפגש.</p>
+          <h2>רוצים להיות חלק?<br/>בואו נדבר.</h2>
+          <p>גלבוע 37, כוכב יאיר · שלישי 3 ביוני, 19:00 · כניסה חופשית</p>
           <div className="register-mini">
             <div className="row">
               <span className="ic">{I.cal}</span>
@@ -639,6 +646,7 @@ function App() {
       <main id="main-content" tabIndex={-1}>
       <Hero />
       <Details />
+      <WhySection />
       <Pillars />
       <RegisterForm />
       </main>
